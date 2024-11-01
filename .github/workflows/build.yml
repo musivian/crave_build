@@ -176,7 +176,7 @@ jobs:
         RED='\033[0;31m'
 
         crave pull 'out/target/product/${{ env.DEVICE_CODENAME }}/*.zip'
-
+            
         if [ -z "$(find . -maxdepth 1 -name '*.zip' | sed 's|^\./||')" ]; then
             echo -e ${RED} "#######################################################################"
             echo -e ${RED} "##                    ROM ZIP FILE NOT FOUND!!!                      ##"
@@ -215,7 +215,7 @@ jobs:
            file_size=$(stat -c%s "${{ env.BUILD_DIR }}/${{ env.DEVICE_CODENAME }}/${{ env.ZIP_FILE }}")
            if [[ $file_size -le 2147483648 ]]; then
               gh release create ${{ github.run_id }} --repo ${{ github.repository }} --title ${{ env.RELEASENAME }} --notes "Released on ${{ env.RELEASE_DATE }}"
-              gh release upload ${{ github.run_id }} --repo ${{ github.repository }} ${{ env.BUILD_DIR }}/compiled/*
+              gh release upload ${{ github.run_id }} --repo ${{ github.repository }} ${{ env.BUILD_DIR }}/${{ env.DEVICE_CODENAME }}/*
            else
               echo -e ${RED} "#######################################################################"
               echo -e ${RED} "##          ROM ZIP FILE IS TOO LARGE FOR GITHUB RELEASE!!           ##"
